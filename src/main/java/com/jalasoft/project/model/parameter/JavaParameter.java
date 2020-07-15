@@ -32,6 +32,15 @@ public class JavaParameter {
     }
 
     public void validate() throws Exception {
-        throw new Exception("Invalid Params");
+        if (this.javaFolder == null || this.javaFolder.isEmpty()) {
+            throw new Exception("Invalid javaFolder");
+        }
+        File javaFolderPath = new File(this.javaFolder);
+        if (!javaFolderPath.isDirectory() || javaFolderPath.isHidden()) {
+            throw new Exception("Invalid javaFolder");
+        }
+        if (this.javaFile == null || !this.javaFile.isFile() || this.javaFile.isHidden()) {
+            throw new Exception("Invalid javaFile");
+        }
     }
 }

@@ -19,7 +19,8 @@ public class ExecuteJava {
     private static final String JAVA_AND = " && ";
     private static final String SPACE = " ";
 
-    public String execute(JavaParameter javaParameter) {
+    public String execute(JavaParameter javaParameter) throws Exception {
+        javaParameter.validate();
         StringBuilder command = new StringBuilder();
         command.append(javaParameter.getJavaFolder())
                 .append(JAVA_COMPILE)
