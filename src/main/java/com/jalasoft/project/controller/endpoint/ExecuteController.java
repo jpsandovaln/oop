@@ -1,13 +1,19 @@
 package com.jalasoft.project.controller.endpoint;
 
+import com.jalasoft.project.controller.component.Properties;
 import com.jalasoft.project.controller.request.RequestParam;
-import com.jalasoft.project.model.ExecuteJava;
+import com.jalasoft.project.controller.response.ErrorResponse;
+import com.jalasoft.project.controller.response.OKResponse;
+import com.jalasoft.project.controller.response.Response;
+import com.jalasoft.project.model.ExecuteCommand;
+import com.jalasoft.project.model.command.ICommandBuilder;
+import com.jalasoft.project.model.command.JavaCommand;
 import com.jalasoft.project.model.parameter.JavaParameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,21 +30,36 @@ import java.nio.file.StandardCopyOption;
 @RequestMapping("/api/v1")
 public class ExecuteController {
 
+    @Autowired
+    private Properties properties;
+
     @PostMapping("/execute")
-    public String execute(RequestParam param) {
+    public ResponseEntity<Response> execute(RequestParam param) {
         try {
             param.validate();
-            Files.createDirectories(Paths.get("javaProject/"));
-            Path path = Paths.get("javaProject/" + param.getFile().getOriginalFilename());
+            Files.createDirectories(Paths.get(this.properties.getProjectFolder()));
+            Path path = Paths.get(this.properties.getProjectFolder() + param.getFile().getOriginalFilename());
             Files.copy(param.getFile().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             File javaFile = new File(path.toString());
-            String javaPath = "D:\\POO\\oop\\thirdParty\\java\\win\\jdk1.8.0_251\\bin\\";
-            ExecuteJava executeJava = new ExecuteJava();
-            return executeJava.execute(new JavaParameter(javaPath, javaFile));
+            String javaPath = this.properties.getJava8Path();
+
+            ICommandBuilder commandBuilder = new JavaCommand();
+
+            String command = commandBuilder.buildCommand(new JavaParameter(javaPath, javaFile));
+            ExecuteCommand executeCommand = new ExecuteCommand();
+            String result = executeCommand.execute(command);
+
+            return ResponseEntity.ok().body(
+                    new OKResponse("200", result, "0")
+            );
         } catch (IOException ex) {
-            return ex.getMessage();
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse("400", ex.getMessage())
+            );
         } catch (Exception ex) {
-            return ex.getMessage();
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse("440", ex.getMessage())
+            );
         }
     }
 }
