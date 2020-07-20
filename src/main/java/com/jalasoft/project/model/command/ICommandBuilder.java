@@ -1,7 +1,7 @@
 package com.jalasoft.project.model.command;
 
-import com.jalasoft.project.model.parameter.JavaParameter;
+import com.jalasoft.project.model.parameter.Parameter;
 
 public interface ICommandBuilder {
-    String buildCommand(JavaParameter javaParameter) throws Exception;
+    String buildCommand(Parameter parameter) throws Exception;
 }

@@ -1,5 +1,7 @@
 package com.jalasoft.project.model;
 
+import com.jalasoft.project.model.result.Result;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +12,7 @@ import java.io.InputStreamReader;
  */
 public class ExecuteCommand {
 
-    public String execute(String command) throws Exception {
+    public Result execute(String command) throws Exception {
 
         try {
             // ProcessBuilder builder = new ProcessBuilder("bash", "-c","\"" + command + "\"");
@@ -28,11 +30,11 @@ public class ExecuteCommand {
                 result.append((char) reader.read());
             }
 
-            return result.toString();
+            return new Result(result.toString(), "0");
         } catch (IOException ex) {
-            return ex.getMessage();
+            throw new Exception(ex.getMessage());
         } catch (InterruptedException ex) {
-            return ex.getMessage();
+            throw new Exception(ex.getMessage());
         }
     }
 }
