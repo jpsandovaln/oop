@@ -9,6 +9,7 @@ import com.jalasoft.project.model.ExecuteCommand;
 import com.jalasoft.project.model.command.ICommandBuilder;
 import com.jalasoft.project.model.command.JavaCommand;
 import com.jalasoft.project.model.parameter.JavaParameter;
+import com.jalasoft.project.model.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,13 +45,14 @@ public class ExecuteController {
             String javaPath = this.properties.getJava8Path();
 
             ICommandBuilder commandBuilder = new JavaCommand();
+            JavaCommand command1 = new JavaCommand();
 
             String command = commandBuilder.buildCommand(new JavaParameter(javaPath, javaFile));
             ExecuteCommand executeCommand = new ExecuteCommand();
-            String result = executeCommand.execute(command);
+            Result result = executeCommand.execute(command);
 
             return ResponseEntity.ok().body(
-                    new OKResponse("200", result, "0")
+                    new OKResponse("200", result.getResultConsole(), result.getPid())
             );
         } catch (IOException ex) {
             return ResponseEntity.badRequest().body(

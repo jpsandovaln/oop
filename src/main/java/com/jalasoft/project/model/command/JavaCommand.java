@@ -1,6 +1,7 @@
 package com.jalasoft.project.model.command;
 
 import com.jalasoft.project.model.parameter.JavaParameter;
+import com.jalasoft.project.model.parameter.Parameter;
 import org.apache.commons.io.FilenameUtils;
 
 /**
@@ -14,18 +15,20 @@ public class JavaCommand implements ICommandBuilder {
     private static final String JAVA_AND = " && ";
     private static final String SPACE = " ";
 
-    public String buildCommand(JavaParameter javaParameter) throws Exception {
+    public String buildCommand(Parameter parameter) throws Exception {
+        JavaParameter javaParameter = (JavaParameter) parameter;
+
         javaParameter.validate();
         StringBuilder command = new StringBuilder();
         command.append(javaParameter.getJavaFolder())
                 .append(JAVA_COMPILE)
-                .append(javaParameter.getJavaFile().getAbsolutePath())
+                .append(javaParameter.getFile().getAbsolutePath())
                 .append(JAVA_AND)
                 .append(JAVA_EXECUTE)
                 .append(JAVA_CP_PARAM)
-                .append(javaParameter.getJavaFile().getParent())
+                .append(javaParameter.getFile().getParent())
                 .append(SPACE)
-                .append(FilenameUtils.getBaseName(javaParameter.getJavaFile().getName()));
+                .append(FilenameUtils.getBaseName(javaParameter.getFile().getName()));
         return command.toString();
     }
 }

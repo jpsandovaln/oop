@@ -6,13 +6,12 @@ import java.io.File;
  * @author HP
  * @version 1.1
  */
-public class JavaParameter {
+public class JavaParameter extends Parameter {
     private String javaFolder;
-    private File javaFile;
 
     public JavaParameter(String javaFolder, File javaFile) {
+        super(javaFile);
         this.javaFolder = javaFolder;
-        this.javaFile = javaFile;
     }
 
     public String getJavaFolder() {
@@ -23,14 +22,6 @@ public class JavaParameter {
         this.javaFolder = javaFolder;
     }
 
-    public File getJavaFile() {
-        return javaFile;
-    }
-
-    public void setJavaFile(File javaFile) {
-        this.javaFile = javaFile;
-    }
-
     public void validate() throws Exception {
         if (this.javaFolder == null || this.javaFolder.isEmpty()) {
             throw new Exception("Invalid javaFolder");
@@ -39,7 +30,7 @@ public class JavaParameter {
         if (!javaFolderPath.isDirectory() || javaFolderPath.isHidden()) {
             throw new Exception("Invalid javaFolder");
         }
-        if (this.javaFile == null || !this.javaFile.isFile() || this.javaFile.isHidden()) {
+        if (this.file == null || !this.file.isFile() || this.file.isHidden()) {
             throw new Exception("Invalid javaFile");
         }
     }
