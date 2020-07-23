@@ -1,5 +1,6 @@
 package com.jalasoft.project.model;
 
+import com.jalasoft.project.model.exception.ExecuteException;
 import com.jalasoft.project.model.result.Result;
 
 import java.io.BufferedReader;
@@ -12,7 +13,7 @@ import java.io.InputStreamReader;
  */
 public class ExecuteCommand {
 
-    public Result execute(String command) throws Exception {
+    public Result execute(String command) throws ExecuteException {
 
         try {
             // ProcessBuilder builder = new ProcessBuilder("bash", "-c","\"" + command + "\"");
@@ -32,9 +33,9 @@ public class ExecuteCommand {
 
             return new Result(result.toString(), "0");
         } catch (IOException ex) {
-            throw new Exception(ex.getMessage());
+            throw new ExecuteException(ex.getMessage());
         } catch (InterruptedException ex) {
-            throw new Exception(ex.getMessage());
+            throw new ExecuteException(ex.getMessage());
         }
     }
 }

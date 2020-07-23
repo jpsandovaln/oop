@@ -1,5 +1,7 @@
 package com.jalasoft.project.model.parameter;
 
+import com.jalasoft.project.model.exception.ParameterInvalidException;
+
 import java.io.File;
 
 /**
@@ -22,16 +24,16 @@ public class JavaParameter extends Parameter {
         this.javaFolder = javaFolder;
     }
 
-    public void validate() throws Exception {
+    public void validate() throws ParameterInvalidException {
         if (this.javaFolder == null || this.javaFolder.isEmpty()) {
-            throw new Exception("Invalid javaFolder");
+            throw new ParameterInvalidException("javaFolder", this.javaFolder);
         }
         File javaFolderPath = new File(this.javaFolder);
         if (!javaFolderPath.isDirectory() || javaFolderPath.isHidden()) {
-            throw new Exception("Invalid javaFolder");
+            throw new ParameterInvalidException("Invalid javaFolder");
         }
         if (this.file == null || !this.file.isFile() || this.file.isHidden()) {
-            throw new Exception("Invalid javaFile");
+            throw new ParameterInvalidException("Invalid javaFile");
         }
     }
 }
