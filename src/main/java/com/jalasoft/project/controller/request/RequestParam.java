@@ -1,5 +1,6 @@
 package com.jalasoft.project.controller.request;
 
+import com.jalasoft.project.controller.exception.RequestParamException;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -41,21 +42,21 @@ public class RequestParam {
         this.file = file;
     }
 
-    public void validate() throws Exception {
+    public void validate() throws RequestParamException {
         if (lang == null || lang.isEmpty()) {
-            throw new Exception("Invalid lang.");
+            throw new RequestParamException("Invalid lang.");
         }
         if (!"java".equals(lang)) {
-            throw new Exception("Invalid lang.");
+            throw new RequestParamException("Invalid lang.");
         }
         if (version.isEmpty()) {
-            throw new Exception("Invalid version");
+            throw new RequestParamException("Invalid version");
         }
         if (!"1.8".equals(version)) {
-            throw new Exception("Invalid version");
+            throw new RequestParamException("Invalid version");
         }
         if (file == null || file.isEmpty()) {
-            throw new Exception("Invalid File");
+            throw new RequestParamException("Invalid File");
         }
     }
 }
