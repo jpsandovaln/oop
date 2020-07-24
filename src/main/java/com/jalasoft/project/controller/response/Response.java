@@ -4,18 +4,18 @@ package com.jalasoft.project.controller.response;
  * @author HP
  * @version 1.1
  */
-public abstract class Response {
-    private String status;
+public abstract class Response<T> {
+    private T status;
 
-    public Response(String status) {
+    public Response(T status) {
         this.status = status;
     }
 
-    public String getStatus() {
+    public T getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(T status) {
         this.status = status;
     }
 }
