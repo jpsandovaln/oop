@@ -1,6 +1,7 @@
 package com.jalasoft.project.controller.endpoint;
 
 import com.jalasoft.project.controller.component.Properties;
+import com.jalasoft.project.controller.exception.FileException;
 import com.jalasoft.project.controller.exception.RequestParamException;
 import com.jalasoft.project.controller.request.RequestParam;
 import com.jalasoft.project.controller.response.ErrorResponse;
@@ -22,11 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 /**
  * @author HP
@@ -47,10 +43,7 @@ public class ExecuteController {
         try {
             param.validate();
 
-            Files.createDirectories(Paths.get(this.properties.getProjectFolder()));
-            Path path = Paths.get(this.properties.getProjectFolder() + param.getFile().getOriginalFilename());
-            Files.copy(param.getFile().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            File javaFile = new File(path.toString());
+            File javaFile = this.fileService.store(param.getFile());
             String javaPath = this.properties.getJava8Path();
 
             ICommandBuilder commandBuilder = new JavaCommand();
@@ -66,6 +59,10 @@ public class ExecuteController {
             return ResponseEntity.badRequest().body(
                     new ErrorResponse("400", ex.getMessage())
             );
+        } catch (FileException ex) {
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse("400", ex.getMessage())
+            );
         } catch (ParameterInvalidException ex) {
             return ResponseEntity.badRequest().body(
                     new ErrorResponse("400", ex.getMessage())
@@ -78,14 +75,6 @@ public class ExecuteController {
             return ResponseEntity.badRequest().body(
                     new ErrorResponse("400", ex.getMessage())
             );
-        } catch (IOException ex) {
-            return ResponseEntity.badRequest().body(
-                    new ErrorResponse("400", ex.getMessage())
-            );
-        } /* catch (Exception ex) {
-            return ResponseEntity.badRequest().body(
-                    new ErrorResponse("440", ex.getMessage())
-            );
-        } */
+        }
     }
 }
