@@ -15,6 +15,7 @@ import com.jalasoft.project.model.exception.CommandException;
 import com.jalasoft.project.model.exception.ExecuteException;
 import com.jalasoft.project.model.exception.ParameterInvalidException;
 import com.jalasoft.project.model.parameter.JavaParameter;
+import com.jalasoft.project.model.parameter.PythonParameter;
 import com.jalasoft.project.model.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
 /**
@@ -46,34 +48,34 @@ public class ExecuteController {
             File javaFile = this.fileService.store(param.getFile());
             String javaPath = this.properties.getJava8Path();
 
-            ICommandBuilder commandBuilder = new JavaCommand();
+            ICommandBuilder<JavaParameter> commandBuilder = new JavaCommand();
 
             String command = commandBuilder.buildCommand(new JavaParameter(javaPath, javaFile));
             ExecuteCommand executeCommand = new ExecuteCommand();
             Result result = executeCommand.execute(command);
 
             return ResponseEntity.ok().body(
-                    new OKResponse("200", result.getResultConsole(), result.getPid())
+                    new OKResponse<Integer>(HttpServletResponse.SC_OK, result.getResultConsole(), result.getPid())
             );
         } catch (RequestParamException ex) {
             return ResponseEntity.badRequest().body(
-                    new ErrorResponse("400", ex.getMessage())
+                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
             );
         } catch (FileException ex) {
             return ResponseEntity.badRequest().body(
-                    new ErrorResponse("400", ex.getMessage())
+                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
             );
         } catch (ParameterInvalidException ex) {
             return ResponseEntity.badRequest().body(
-                    new ErrorResponse("400", ex.getMessage())
+                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
             );
         } catch (CommandException ex) {
             return ResponseEntity.badRequest().body(
-                    new ErrorResponse("400", ex.getMessage())
+                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
             );
         } catch (ExecuteException ex) {
             return ResponseEntity.badRequest().body(
-                    new ErrorResponse("400", ex.getMessage())
+                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
             );
         }
     }

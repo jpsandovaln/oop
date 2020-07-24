@@ -3,23 +3,20 @@ package com.jalasoft.project.model.command;
 import com.jalasoft.project.model.exception.CommandException;
 import com.jalasoft.project.model.exception.ParameterInvalidException;
 import com.jalasoft.project.model.parameter.JavaParameter;
-import com.jalasoft.project.model.parameter.Parameter;
 import org.apache.commons.io.FilenameUtils;
 
 /**
  * @author HP
  * @version 1.1
  */
-public class JavaCommand implements ICommandBuilder {
+public class JavaCommand implements ICommandBuilder<JavaParameter> {
     private static  final String JAVA_COMPILE = "javac ";
     private static final String JAVA_EXECUTE = "java ";
     private static final String JAVA_CP_PARAM = "-cp ";
     private static final String JAVA_AND = " && ";
     private static final String SPACE = " ";
 
-    public String buildCommand(Parameter parameter) throws ParameterInvalidException, CommandException {
-        JavaParameter javaParameter = (JavaParameter) parameter;
-
+    public String buildCommand(JavaParameter javaParameter) throws ParameterInvalidException, CommandException {
         javaParameter.validate();
         StringBuilder command = new StringBuilder();
         command.append(javaParameter.getJavaFolder())

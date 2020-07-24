@@ -4,11 +4,11 @@ package com.jalasoft.project.controller.response;
  * @author HP
  * @version 1.1
  */
-public class OKResponse extends Response {
+public class OKResponse<T> extends Response {
     private String message;
     private String pid;
 
-    public OKResponse(String status, String message, String pid) {
+    public OKResponse(T status, String message, String pid) {
         super(status);
         this.message = message;
         this.pid = pid;
