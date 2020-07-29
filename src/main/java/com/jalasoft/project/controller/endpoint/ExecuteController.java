@@ -1,7 +1,8 @@
 package com.jalasoft.project.controller.endpoint;
 
-import com.jalasoft.project.controller.component.Properties;
+import com.jalasoft.project.controller.component.JavaProperties;
 import com.jalasoft.project.controller.exception.FileException;
+import com.jalasoft.project.controller.exception.PropertyException;
 import com.jalasoft.project.controller.exception.RequestParamException;
 import com.jalasoft.project.controller.request.RequestParam;
 import com.jalasoft.project.controller.response.ErrorResponse;
@@ -15,7 +16,6 @@ import com.jalasoft.project.model.exception.CommandException;
 import com.jalasoft.project.model.exception.ExecuteException;
 import com.jalasoft.project.model.exception.ParameterInvalidException;
 import com.jalasoft.project.model.parameter.JavaParameter;
-import com.jalasoft.project.model.parameter.PythonParameter;
 import com.jalasoft.project.model.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ import java.io.File;
 public class ExecuteController {
 
     @Autowired
-    private Properties properties;
+    private JavaProperties javaProperties;
 
     @Autowired
     private FileService fileService;
@@ -46,7 +46,7 @@ public class ExecuteController {
             param.validate();
 
             File javaFile = this.fileService.store(param.getFile());
-            String javaPath = this.properties.getJava8Path();
+            String javaPath = this.javaProperties.getLanguageFolder(param.getVersion());
 
             ICommandBuilder<JavaParameter> commandBuilder = new JavaCommand();
 
@@ -57,23 +57,11 @@ public class ExecuteController {
             return ResponseEntity.ok().body(
                     new OKResponse<Integer>(HttpServletResponse.SC_OK, result.getResultConsole(), result.getPid())
             );
-        } catch (RequestParamException ex) {
+        } catch (RequestParamException | FileException | PropertyException ex) {
             return ResponseEntity.badRequest().body(
                     new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
             );
-        } catch (FileException ex) {
-            return ResponseEntity.badRequest().body(
-                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
-            );
-        } catch (ParameterInvalidException ex) {
-            return ResponseEntity.badRequest().body(
-                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
-            );
-        } catch (CommandException ex) {
-            return ResponseEntity.badRequest().body(
-                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
-            );
-        } catch (ExecuteException ex) {
+        } catch (ParameterInvalidException | CommandException | ExecuteException ex) {
             return ResponseEntity.badRequest().body(
                     new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
             );

@@ -1,6 +1,6 @@
 package com.jalasoft.project.controller.service;
 
-import com.jalasoft.project.controller.component.Properties;
+import com.jalasoft.project.controller.component.JavaProperties;
 import com.jalasoft.project.controller.exception.FileException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileService {
     @Autowired
-    private Properties properties;
+    private JavaProperties javaProperties;
 
     public File store(MultipartFile file) throws FileException {
         try {
@@ -34,8 +34,8 @@ public class FileService {
 
     private Path getFilePath(String fileName)throws FileException {
         try {
-            Files.createDirectories(Paths.get(this.properties.getProjectFolder()));
-            return Paths.get(this.properties.getProjectFolder() + fileName);
+            Files.createDirectories(Paths.get(this.javaProperties.getProjectFolder()));
+            return Paths.get(this.javaProperties.getProjectFolder() + fileName);
         } catch (IOException ex) {
             throw new FileException("Path error", ex);
         }
