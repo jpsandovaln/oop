@@ -16,6 +16,7 @@ import com.jalasoft.project.model.exception.CommandException;
 import com.jalasoft.project.model.exception.ExecuteException;
 import com.jalasoft.project.model.exception.ParameterInvalidException;
 import com.jalasoft.project.model.parameter.JavaParameter;
+import com.jalasoft.project.model.parameter.Parameter;
 import com.jalasoft.project.model.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +41,12 @@ public class ExecuteController {
     @Autowired
     private FileService fileService;
 
-    @PostMapping("/execute")
+    @PostMapping("/execute-java")
     public ResponseEntity<Response> execute(RequestParam param) {
         try {
             param.validate();
 
-            File javaFile = this.fileService.store(param.getFile());
+            File javaFile = this.fileService.store(param.getFile(), this.javaProperties.getProjectFolder());
             String javaPath = this.javaProperties.getLanguageFolder(param.getVersion());
 
             ICommandBuilder<JavaParameter> commandBuilder = new JavaCommand();

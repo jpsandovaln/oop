@@ -19,12 +19,10 @@ import java.nio.file.StandardCopyOption;
  */
 @Service
 public class FileService {
-    @Autowired
-    private JavaProperties javaProperties;
 
-    public File store(MultipartFile file) throws FileException {
+    public File store(MultipartFile file, String projectFolder) throws FileException {
         try {
-            Path path = this.getFilePath(file.getOriginalFilename());
+            Path path = this.getFilePath(file.getOriginalFilename(), projectFolder);
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             return new File(path.toString());
         } catch (IOException ex) {
@@ -32,10 +30,10 @@ public class FileService {
         }
     }
 
-    private Path getFilePath(String fileName)throws FileException {
+    private Path getFilePath(String fileName, String projectFolder)throws FileException {
         try {
-            Files.createDirectories(Paths.get(this.javaProperties.getProjectFolder()));
-            return Paths.get(this.javaProperties.getProjectFolder() + fileName);
+            Files.createDirectories(Paths.get(projectFolder));
+            return Paths.get(projectFolder + fileName);
         } catch (IOException ex) {
             throw new FileException("Path error", ex);
         }

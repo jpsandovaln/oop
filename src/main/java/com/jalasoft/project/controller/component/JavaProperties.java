@@ -10,21 +10,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "execute.java")
-public class JavaProperties {
-    private String projectFolder;
+public class JavaProperties extends Properties {
     private String version7;
     private String version8;
 
     private final static  String JAVA_VERSION7 = "1.7";
     private final static  String JAVA_VERSION8 = "1.8";
-
-    public String getProjectFolder() {
-        return projectFolder;
-    }
-
-    public void setProjectFolder(String projectFolder) {
-        this.projectFolder = projectFolder;
-    }
 
     public String getVersion7() {
         return version7;
