@@ -1,17 +1,13 @@
 package com.jalasoft.project.controller.component;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import com.jalasoft.project.controller.exception.PropertyException;
 
 /**
  * @author HP
  * @version 1.1
  */
-@Component
-@ConfigurationProperties(prefix = "execute")
-public class Properties {
+public abstract class Properties {
     private String projectFolder;
-    private String java8Path;
 
     public String getProjectFolder() {
         return projectFolder;
@@ -21,11 +17,5 @@ public class Properties {
         this.projectFolder = projectFolder;
     }
 
-    public String getJava8Path() {
-        return java8Path;
-    }
-
-    public void setJava8Path(String java8Path) {
-        this.java8Path = java8Path;
-    }
+    public abstract String getLanguageFolder(String version) throws PropertyException;
 }
