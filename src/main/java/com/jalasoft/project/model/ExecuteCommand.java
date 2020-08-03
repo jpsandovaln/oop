@@ -23,6 +23,10 @@ public class ExecuteCommand {
             Process process = builder.start();
             process.waitFor();
 
+            if (process.exitValue() != 0) {
+                throw new ExecuteException("Error executing command");
+            }
+
             InputStreamReader streamReader = new InputStreamReader(process.getInputStream());
             BufferedReader reader = new BufferedReader(streamReader);
 
@@ -31,11 +35,17 @@ public class ExecuteCommand {
                 result.append((char) reader.read());
             }
 
-            return new Result(result.toString(), "0");
+            return new Result(result.toString(), this.getPid(process.toString()));
         } catch (IOException ex) {
             throw new ExecuteException(ex.getMessage());
         } catch (InterruptedException ex) {
             throw new ExecuteException(ex.getMessage());
         }
+    }
+
+    private String getPid(String process) {
+        return process.substring(
+                process.indexOf("=") + 1, process.indexOf(",")
+        );
     }
 }
