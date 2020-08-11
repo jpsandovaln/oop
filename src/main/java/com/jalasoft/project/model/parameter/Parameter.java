@@ -1,7 +1,6 @@
 package com.jalasoft.project.model.parameter;
 
 import com.jalasoft.project.common.exception.InvalidDataException;
-import com.jalasoft.project.model.exception.ParameterInvalidException;
 
 import java.io.File;
 

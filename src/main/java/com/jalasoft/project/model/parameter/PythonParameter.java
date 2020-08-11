@@ -6,7 +6,6 @@ import com.jalasoft.project.common.validation.IValidationStrategy;
 import com.jalasoft.project.common.validation.LanguageFolderValidation;
 import com.jalasoft.project.common.validation.NotNullOrEmptyValidation;
 import com.jalasoft.project.common.validation.ValidationContext;
-import com.jalasoft.project.model.exception.ParameterInvalidException;
 
 import java.io.File;
 import java.util.ArrayList;
