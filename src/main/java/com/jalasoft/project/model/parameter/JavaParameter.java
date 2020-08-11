@@ -1,8 +1,16 @@
 package com.jalasoft.project.model.parameter;
 
+import com.jalasoft.project.common.exception.InvalidDataException;
+import com.jalasoft.project.common.validation.FileValidation;
+import com.jalasoft.project.common.validation.IValidationStrategy;
+import com.jalasoft.project.common.validation.LanguageFolderValidation;
+import com.jalasoft.project.common.validation.NotNullOrEmptyValidation;
+import com.jalasoft.project.common.validation.ValidationContext;
 import com.jalasoft.project.model.exception.ParameterInvalidException;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author HP
@@ -24,16 +32,13 @@ public class JavaParameter extends Parameter {
         this.javaFolder = javaFolder;
     }
 
-    public void validate() throws ParameterInvalidException {
-        if (this.javaFolder == null || this.javaFolder.isEmpty()) {
-            throw new ParameterInvalidException("javaFolder", this.javaFolder);
-        }
-        File javaFolderPath = new File(this.javaFolder);
-        if (!javaFolderPath.isDirectory() || javaFolderPath.isHidden()) {
-            throw new ParameterInvalidException("Invalid javaFolder");
-        }
-        if (this.file == null || !this.file.isFile() || this.file.isHidden()) {
-            throw new ParameterInvalidException("Invalid javaFile");
-        }
+    public void validate() throws InvalidDataException {
+        List<IValidationStrategy> validationStrategies = new ArrayList<>();
+        validationStrategies.add(new NotNullOrEmptyValidation("javaFolder", this.javaFolder));
+        validationStrategies.add(new LanguageFolderValidation(this.javaFolder));
+        validationStrategies.add(new FileValidation(this.file));
+
+        ValidationContext context = new ValidationContext(validationStrategies);
+        context.validation();
     }
 }
