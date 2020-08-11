@@ -1,5 +1,6 @@
 package com.jalasoft.project.model.parameter;
 
+import com.jalasoft.project.common.exception.InvalidDataException;
 import com.jalasoft.project.model.exception.ParameterInvalidException;
 
 import java.io.File;
@@ -23,5 +24,5 @@ public abstract class Parameter {
         this.file = file;
     }
 
-    public abstract void validate() throws ParameterInvalidException;
+    public abstract void validate() throws InvalidDataException;
 }

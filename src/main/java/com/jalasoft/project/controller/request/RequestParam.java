@@ -1,8 +1,16 @@
 package com.jalasoft.project.controller.request;
 
+import com.jalasoft.project.common.exception.InvalidDataException;
+import com.jalasoft.project.common.validation.IValidationStrategy;
+import com.jalasoft.project.common.validation.JavaVersionValidation;
+import com.jalasoft.project.common.validation.LanguageValidation;
+import com.jalasoft.project.common.validation.MultipartFileValidation;
+import com.jalasoft.project.common.validation.NotNullOrEmptyValidation;
+import com.jalasoft.project.common.validation.ValidationContext;
 import com.jalasoft.project.controller.exception.RequestParamException;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,21 +58,15 @@ public class RequestParam {
         this.file = file;
     }
 
-    public void validate() throws RequestParamException {
-        if (lang == null || lang.isEmpty()) {
-            throw new RequestParamException("Invalid lang.");
-        }
-        if (!"java".equals(lang)) {
-            throw new RequestParamException("Invalid lang.");
-        }
-        if (version.isEmpty()) {
-            throw new RequestParamException("Invalid version");
-        }
-        if (!JAVA_VERSION_LIST.contains(version)) {
-            throw new RequestParamException("Invalid version");
-        }
-        if (file == null || file.isEmpty()) {
-            throw new RequestParamException("Invalid File");
-        }
+    public void validate() throws InvalidDataException {
+        List<IValidationStrategy> validationStrategies = new ArrayList<>();
+        validationStrategies.add(new NotNullOrEmptyValidation("lang", this.lang));
+        validationStrategies.add(new NotNullOrEmptyValidation("version", this.version));
+        validationStrategies.add(new MultipartFileValidation(this.file));
+        validationStrategies.add(new LanguageValidation(this.lang));
+        validationStrategies.add(new JavaVersionValidation(this.version));
+
+        ValidationContext context = new ValidationContext(validationStrategies);
+        context.validation();
     }
 }

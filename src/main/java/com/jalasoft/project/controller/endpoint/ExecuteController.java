@@ -1,5 +1,6 @@
 package com.jalasoft.project.controller.endpoint;
 
+import com.jalasoft.project.common.exception.InvalidDataException;
 import com.jalasoft.project.controller.component.JavaProperties;
 import com.jalasoft.project.controller.exception.FileException;
 import com.jalasoft.project.controller.exception.PropertyException;
@@ -58,7 +59,7 @@ public class ExecuteController {
             return ResponseEntity.ok().body(
                     new OKResponse<Integer>(HttpServletResponse.SC_OK, result.getResultConsole(), result.getPid())
             );
-        } catch (RequestParamException | FileException | PropertyException ex) {
+        } catch (InvalidDataException | FileException | PropertyException ex) {
             return ResponseEntity.badRequest().body(
                     new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
             );

@@ -1,8 +1,16 @@
 package com.jalasoft.project.model.parameter;
 
+import com.jalasoft.project.common.exception.InvalidDataException;
+import com.jalasoft.project.common.validation.FileValidation;
+import com.jalasoft.project.common.validation.IValidationStrategy;
+import com.jalasoft.project.common.validation.LanguageFolderValidation;
+import com.jalasoft.project.common.validation.NotNullOrEmptyValidation;
+import com.jalasoft.project.common.validation.ValidationContext;
 import com.jalasoft.project.model.exception.ParameterInvalidException;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author HP
@@ -25,16 +33,13 @@ public class PythonParameter extends Parameter {
     }
 
     @Override
-    public void validate() throws ParameterInvalidException {
-        if (this.pythonFolder == null || this.pythonFolder.isEmpty()) {
-            throw new ParameterInvalidException("pythonFolder", this.pythonFolder);
-        }
-        File javaFolderPath = new File(this.pythonFolder);
-        if (!javaFolderPath.isDirectory() || javaFolderPath.isHidden()) {
-            throw new ParameterInvalidException("Invalid pythonFolder");
-        }
-        if (this.file == null || !this.file.isFile() || this.file.isHidden()) {
-            throw new ParameterInvalidException("Invalid pythonFile");
-        }
+    public void validate() throws InvalidDataException {
+        List<IValidationStrategy> validationStrategies = new ArrayList<>();
+        validationStrategies.add(new NotNullOrEmptyValidation("pythonFolder", this.pythonFolder));
+        validationStrategies.add(new LanguageFolderValidation(this.pythonFolder));
+        validationStrategies.add(new FileValidation(this.file));
+
+        ValidationContext context = new ValidationContext(validationStrategies);
+        context.validation();
     }
 }
