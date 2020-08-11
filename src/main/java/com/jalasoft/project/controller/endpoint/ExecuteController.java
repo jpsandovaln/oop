@@ -4,7 +4,6 @@ import com.jalasoft.project.common.exception.InvalidDataException;
 import com.jalasoft.project.controller.component.JavaProperties;
 import com.jalasoft.project.controller.exception.FileException;
 import com.jalasoft.project.controller.exception.PropertyException;
-import com.jalasoft.project.controller.exception.RequestParamException;
 import com.jalasoft.project.controller.request.RequestParam;
 import com.jalasoft.project.controller.response.ErrorResponse;
 import com.jalasoft.project.controller.response.OKResponse;
@@ -15,9 +14,7 @@ import com.jalasoft.project.model.command.ICommandBuilder;
 import com.jalasoft.project.model.command.JavaCommand;
 import com.jalasoft.project.model.exception.CommandException;
 import com.jalasoft.project.model.exception.ExecuteException;
-import com.jalasoft.project.model.exception.ParameterInvalidException;
 import com.jalasoft.project.model.parameter.JavaParameter;
-import com.jalasoft.project.model.parameter.Parameter;
 import com.jalasoft.project.model.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -63,7 +60,7 @@ public class ExecuteController {
             return ResponseEntity.badRequest().body(
                     new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
             );
-        } catch (ParameterInvalidException | CommandException | ExecuteException ex) {
+        } catch (CommandException | ExecuteException ex) {
             return ResponseEntity.badRequest().body(
                     new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage())
             );

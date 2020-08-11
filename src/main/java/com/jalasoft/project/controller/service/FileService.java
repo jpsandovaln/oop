@@ -1,8 +1,6 @@
 package com.jalasoft.project.controller.service;
 
-import com.jalasoft.project.controller.component.JavaProperties;
 import com.jalasoft.project.controller.exception.FileException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
