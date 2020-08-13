@@ -1,8 +1,8 @@
 package com.jalasoft.project.common.validation;
 
+import com.jalasoft.project.common.configuration.ConfigurationProperty;
 import com.jalasoft.project.common.exception.InvalidDataException;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,13 +11,12 @@ import java.util.List;
  */
 public class LanguageValidation implements IValidationStrategy {
     private String lang;
-    private final static List<String> LANGUAGE_LIST = Arrays.asList(
-        "java",
-        "python"
-    );
+    private List<String> LANGUAGE_LIST;
 
-    public LanguageValidation(String lang) {
+    public LanguageValidation(String lang) throws InvalidDataException{
         this.lang = lang;
+        this.LANGUAGE_LIST = ConfigurationProperty.getLanguages();
+        System.out.println(this.LANGUAGE_LIST.toString());
     }
 
     @Override
