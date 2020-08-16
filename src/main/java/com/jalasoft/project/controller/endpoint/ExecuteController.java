@@ -10,6 +10,7 @@ import com.jalasoft.project.controller.response.OKResponse;
 import com.jalasoft.project.controller.response.Response;
 import com.jalasoft.project.controller.service.FileService;
 import com.jalasoft.project.model.ExecuteCommand;
+import com.jalasoft.project.model.command.CommandFacade;
 import com.jalasoft.project.model.command.ICommandBuilder;
 import com.jalasoft.project.model.command.JavaCommand;
 import com.jalasoft.project.model.exception.CommandException;
@@ -47,11 +48,7 @@ public class ExecuteController {
             File javaFile = this.fileService.store(param.getFile(), this.javaProperties.getProjectFolder());
             String javaPath = this.javaProperties.getLanguageFolder(param.getVersion());
 
-            ICommandBuilder<JavaParameter> commandBuilder = new JavaCommand();
-
-            String command = commandBuilder.buildCommand(new JavaParameter(javaPath, javaFile));
-            ExecuteCommand executeCommand = new ExecuteCommand();
-            Result result = executeCommand.execute(command);
+            Result result = CommandFacade.executeJavaCode(param.getLang(), javaPath, javaFile);
 
             return ResponseEntity.ok().body(
                     new OKResponse<Integer>(HttpServletResponse.SC_OK, result.getResultConsole(), result.getPid())
