@@ -1,25 +1,17 @@
 package com.jalasoft.project.controller.endpoint;
 
 import com.jalasoft.project.common.exception.InvalidDataException;
-import com.jalasoft.project.controller.component.JavaProperties;
 import com.jalasoft.project.controller.component.PythonProperties;
 import com.jalasoft.project.controller.exception.FileException;
 import com.jalasoft.project.controller.exception.PropertyException;
-import com.jalasoft.project.controller.request.RequestParam;
 import com.jalasoft.project.controller.request.RequestPythonParam;
 import com.jalasoft.project.controller.response.ErrorResponse;
 import com.jalasoft.project.controller.response.OKResponse;
 import com.jalasoft.project.controller.response.Response;
 import com.jalasoft.project.controller.service.FileService;
-import com.jalasoft.project.model.ExecuteCommand;
 import com.jalasoft.project.model.command.CommandFacade;
-import com.jalasoft.project.model.command.ICommandBuilder;
-import com.jalasoft.project.model.command.JavaCommand;
-import com.jalasoft.project.model.command.PythonCommand;
 import com.jalasoft.project.model.exception.CommandException;
 import com.jalasoft.project.model.exception.ExecuteException;
-import com.jalasoft.project.model.parameter.JavaParameter;
-import com.jalasoft.project.model.parameter.PythonParameter;
 import com.jalasoft.project.model.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +28,7 @@ import java.io.File;
  */
 @RestController
 @RequestMapping("/api/v1")
-public class ExecuteController1 {
+public class ExecutePythonController {
 
     @Autowired
     private PythonProperties pythonProperties;

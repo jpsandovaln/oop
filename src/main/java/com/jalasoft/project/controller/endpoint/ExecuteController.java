@@ -4,18 +4,14 @@ import com.jalasoft.project.common.exception.InvalidDataException;
 import com.jalasoft.project.controller.component.JavaProperties;
 import com.jalasoft.project.controller.exception.FileException;
 import com.jalasoft.project.controller.exception.PropertyException;
-import com.jalasoft.project.controller.request.RequestParam;
+import com.jalasoft.project.controller.request.RequestJavaParam;
 import com.jalasoft.project.controller.response.ErrorResponse;
 import com.jalasoft.project.controller.response.OKResponse;
 import com.jalasoft.project.controller.response.Response;
 import com.jalasoft.project.controller.service.FileService;
-import com.jalasoft.project.model.ExecuteCommand;
 import com.jalasoft.project.model.command.CommandFacade;
-import com.jalasoft.project.model.command.ICommandBuilder;
-import com.jalasoft.project.model.command.JavaCommand;
 import com.jalasoft.project.model.exception.CommandException;
 import com.jalasoft.project.model.exception.ExecuteException;
-import com.jalasoft.project.model.parameter.JavaParameter;
 import com.jalasoft.project.model.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +37,7 @@ public class ExecuteController {
     private FileService fileService;
 
     @PostMapping("/execute-java")
-    public ResponseEntity<Response> execute(RequestParam param) {
+    public ResponseEntity<Response> execute(RequestJavaParam param) {
         try {
             param.validate();
 

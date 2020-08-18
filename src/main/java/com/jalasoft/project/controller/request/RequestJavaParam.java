@@ -13,7 +13,7 @@ import java.util.List;
  * @author HP
  * @version 1.1
  */
-public class RequestParam {
+public class RequestJavaParam {
     private String lang;
     private String version;
     private MultipartFile file;
@@ -23,7 +23,7 @@ public class RequestParam {
             "1.7"
     );
 
-    public RequestParam(String lang, String version, MultipartFile file) {
+    public RequestJavaParam(String lang, String version, MultipartFile file) {
         this.lang = lang;
         this.version = version;
         this.file = file;
