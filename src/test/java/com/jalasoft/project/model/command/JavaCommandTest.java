@@ -18,7 +18,6 @@ public class JavaCommandTest {
     @Test
     public void buildCommandJava8() throws InvalidDataException, CommandException {
         JavaParameter javaParameter = new JavaParameter(javaFolder8, new File(javaFile));
-
         JavaCommand command = new JavaCommand();
         String result = command.buildCommand(javaParameter);
         String expected = "C:/Courses/oopProjectCourses/thirdParty/java/win/jdk1.8.0_251/bin/javac C:\\Courses\\" +

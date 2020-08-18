@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "execute.python")
+
 public class PythonProperties extends Properties {
     private String version2;
     private String version3;
