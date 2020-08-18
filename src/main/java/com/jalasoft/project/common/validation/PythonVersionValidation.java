@@ -5,19 +5,14 @@ import com.jalasoft.project.common.exception.InvalidDataException;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author HP
- * @version 1.1
- */
-public class JavaVersionValidation implements IValidationStrategy {
+public class PythonVersionValidation implements IValidationStrategy {
     private String version;
     private final static List<String> VERSION_LIST = Arrays.asList(
-            "1.7",
-            "1.8",
-            "14.0"
+            "3.7",
+            "2.7"
     );
 
-    public JavaVersionValidation(String version) {
+    public PythonVersionValidation(String version) {
         this.version = version;
     }
 
@@ -28,3 +23,4 @@ public class JavaVersionValidation implements IValidationStrategy {
         }
     }
 }
+

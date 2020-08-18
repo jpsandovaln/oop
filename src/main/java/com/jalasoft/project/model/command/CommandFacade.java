@@ -5,6 +5,7 @@ import com.jalasoft.project.model.ExecuteCommand;
 import com.jalasoft.project.model.exception.CommandException;
 import com.jalasoft.project.model.exception.ExecuteException;
 import com.jalasoft.project.model.parameter.JavaParameter;
+import com.jalasoft.project.model.parameter.PythonParameter;
 import com.jalasoft.project.model.result.Result;
 
 import java.io.File;
@@ -18,6 +19,14 @@ public class CommandFacade {
             throws InvalidDataException, CommandException, ExecuteException {
         ICommandBuilder<JavaParameter> commandBuilder = CommandFactory.getCommand(lang);
         String command = commandBuilder.buildCommand(new JavaParameter(javaPath, javaFile));
+        ExecuteCommand executeCommand = new ExecuteCommand();
+        return executeCommand.execute(command);
+    }
+
+    public static Result executePythonCode(String lang, String javaPath, File javaFile)
+            throws InvalidDataException, CommandException, ExecuteException {
+        ICommandBuilder<PythonParameter> commandBuilder = CommandFactory.getCommand(lang);
+        String command = commandBuilder.buildCommand(new PythonParameter(javaPath, javaFile));
         ExecuteCommand executeCommand = new ExecuteCommand();
         return executeCommand.execute(command);
     }

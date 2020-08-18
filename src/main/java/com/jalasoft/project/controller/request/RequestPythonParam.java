@@ -13,17 +13,17 @@ import java.util.List;
  * @author HP
  * @version 1.1
  */
-public class RequestParam {
+public class RequestPythonParam {
     private String lang;
     private String version;
     private MultipartFile file;
 
-    private final static List<String> JAVA_VERSION_LIST = Arrays.asList(
-            "1.8",
-            "1.7"
+    private final static List<String> PYTHON_VERSION_LIST = Arrays.asList(
+            "2.7",
+            "3.7"
     );
 
-    public RequestParam(String lang, String version, MultipartFile file) {
+    public RequestPythonParam(String lang, String version, MultipartFile file) {
         this.lang = lang;
         this.version = version;
         this.file = file;
@@ -37,7 +37,7 @@ public class RequestParam {
         this.lang = lang;
     }
 
-    public String getVersion() { return version;  }
+    public String getVersion() { return version; }
 
     public void setVersion(String version) {
         this.version = version;
@@ -57,7 +57,8 @@ public class RequestParam {
         validationStrategies.add(new NotNullOrEmptyValidation("version", this.version));
         validationStrategies.add(new MultipartFileValidation(this.file));
         validationStrategies.add(new LanguageValidation(this.lang));
-        validationStrategies.add(new JavaVersionValidation(this.version));
+
+        validationStrategies.add(new PythonVersionValidation(this.version));
 
         ValidationContext context = new ValidationContext(validationStrategies);
         context.validation();

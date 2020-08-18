@@ -6,6 +6,7 @@ import com.jalasoft.project.common.validation.IValidationStrategy;
 import com.jalasoft.project.common.validation.LanguageFolderValidation;
 import com.jalasoft.project.common.validation.NotNullOrEmptyValidation;
 import com.jalasoft.project.common.validation.ValidationContext;
+import com.jalasoft.project.model.exception.ParameterInvalidException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,8 +19,8 @@ import java.util.List;
 public class PythonParameter extends Parameter {
     private String pythonFolder;
 
-    public PythonParameter(String pythonFolder, File file) {
-        super(file);
+    public PythonParameter(String pythonFolder, File pythonFile) {
+        super(pythonFile);
         this.pythonFolder = pythonFolder;
     }
 
@@ -31,7 +32,6 @@ public class PythonParameter extends Parameter {
         this.pythonFolder = pythonFolder;
     }
 
-    @Override
     public void validate() throws InvalidDataException {
         List<IValidationStrategy> validationStrategies = new ArrayList<>();
         validationStrategies.add(new NotNullOrEmptyValidation("pythonFolder", this.pythonFolder));
