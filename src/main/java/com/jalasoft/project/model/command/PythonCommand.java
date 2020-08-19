@@ -5,6 +5,7 @@ import com.jalasoft.project.model.exception.CommandException;
 import com.jalasoft.project.model.parameter.PythonParameter;
 import org.apache.commons.io.FilenameUtils;
 
+//python.exe test.py
 public class PythonCommand implements ICommandBuilder<PythonParameter> {
     private static  final String PYTHON_EXECUTE = "/python.exe ";
 

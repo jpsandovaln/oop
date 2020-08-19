@@ -22,10 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
-/**
- * @author HP
- * @version 1.1
- */
+
 @RestController
 @RequestMapping("/api/v1")
 public class ExecutePythonController {

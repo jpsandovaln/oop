@@ -30,7 +30,6 @@ public class PythonCommandTest {
     public void buildCommandInvalidPythonFolder() throws InvalidDataException, CommandException {
         PythonParameter pythonParameter = new PythonParameter(pythonFolder3Invalid, new File(pythonFile));
         PythonCommand command = new PythonCommand();
-        System.out.println(command);
         command.buildCommand(pythonParameter);
     }
 

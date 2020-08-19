@@ -18,7 +18,7 @@ public class PythonProperties extends Properties {
         return version2;
     }
 
-    public void setVersion2(String version7) {
+    public void setVersion2(String version2) {
         this.version2 = version2;
     }
 

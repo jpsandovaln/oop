@@ -23,10 +23,10 @@ public class CommandFacade {
         return executeCommand.execute(command);
     }
 
-    public static Result executePythonCode(String lang, String javaPath, File javaFile)
+    public static Result executePythonCode(String lang, String pythonPath, File pythonFile)
             throws InvalidDataException, CommandException, ExecuteException {
         ICommandBuilder<PythonParameter> commandBuilder = CommandFactory.getCommand(lang);
-        String command = commandBuilder.buildCommand(new PythonParameter(javaPath, javaFile));
+        String command = commandBuilder.buildCommand(new PythonParameter(pythonPath, pythonFile));
         ExecuteCommand executeCommand = new ExecuteCommand();
         return executeCommand.execute(command);
     }

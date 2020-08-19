@@ -28,7 +28,7 @@ import java.io.File;
  */
 @RestController
 @RequestMapping("/api/v1")
-public class ExecuteController {
+public class ExecuteJavaController {
 
     @Autowired
     private JavaProperties javaProperties;
