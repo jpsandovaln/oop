@@ -41,7 +41,7 @@ public class ExecutePythonController {
 
                 File pythonFile = this.fileService.store(param.getFile(), this.pythonProperties.getProjectFolder());
                 String pythonPath = this.pythonProperties.getLanguageFolder(param.getVersion());
-
+                System.out.println("testsssssss");
                 Result result = CommandFacade.executePythonCode(param.getLang(), pythonPath, pythonFile);
 
                 return ResponseEntity.ok().body(

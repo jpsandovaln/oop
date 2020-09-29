@@ -43,7 +43,7 @@ public class ExecuteJavaController {
 
             File javaFile = this.fileService.store(param.getFile(), this.javaProperties.getProjectFolder());
             String javaPath = this.javaProperties.getLanguageFolder(param.getVersion());
-
+            System.out.println("test value");
             Result result = CommandFacade.executeJavaCode(param.getLang(), javaPath, javaFile);
 
             return ResponseEntity.ok().body(

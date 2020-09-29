@@ -15,7 +15,16 @@ public class JavaCommand implements ICommandBuilder<JavaParameter> {
     private static final String JAVA_CP_PARAM = "-cp ";
     private static final String JAVA_AND = " && ";
     private static final String SPACE = " ";
-
+    private static final String CMD = "cmd";
+    /**
+     * Builds java command for all versions.
+     * <h1>hi </h1>
+     *
+     * @param javaParameter
+     * @return
+     * @throws InvalidDataException
+     * @throws CommandException
+     */
     public String buildCommand(JavaParameter javaParameter) throws InvalidDataException, CommandException {
         if (javaParameter == null) {
             throw new InvalidDataException();
